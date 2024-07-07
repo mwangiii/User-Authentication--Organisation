@@ -5,3 +5,4 @@ Flask-Bcrypt==0.7.1  # For hashing passwords
 PyJWT==2.3.0  # JSON Web Tokens
 flask_jwt_extended # For creating access tokens
 flask_migrate # For database migrations
+SQLAlchemy # For database management
