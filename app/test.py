@@ -1,20 +1,41 @@
-# run.py
+import jwt
+from datetime import datetime, timedelta
 
-from app import app, db  # Import the Flask app and SQLAlchemy instance
-from app.models import User
+# Your JWT secret key
+JWT_SECRET_KEY = 'your_jwt_secret_key'  # Replace with your actual secret key
 
-# Ensure app context is pushed
-with app.app_context():
-    # Create any necessary database tables
-    db.create_all()
+def generate_jwt_token(user_id):
+    try:
+        payload = {
+            'exp': datetime.utcnow() + timedelta(hours=1),  # Token expires after 1 hour
+            'iat': datetime.utcnow(), 
+            'sub': str(user_id)
+        }
+        jwt_token = jwt.encode(payload, JWT_SECRET_KEY, algorithm='HS256')
+        return jwt_token
+    except Exception as e:
+        return "Cannot generate session token"
 
-    # Example usage to add a new user record
-    new_user = User(userid="10000", firstname='Kwanza', lastname='Pili', email='kwanzapilipili@example.com', password='password', phone='1234567890')
+def decode_jwt_token(token):
+    try:
+        decoded = jwt.decode(token, JWT_SECRET_KEY, algorithms=['HS256'])
+        return decoded
+    except jwt.ExpiredSignatureError:
+        return "Token has expired"
+    except jwt.InvalidTokenError:
+        return "Invalid token"
 
-    # Add the new user to the session
-    db.session.add(new_user)
+# Test the JWT generation and decoding
+if __name__ == "__main__":
+    user_id = 123  # Example user ID
+    token = generate_jwt_token(user_id)
+    print("Generated JWT Token:", token)
+    
+    # Decode the token to verify its contents
+    decoded_token = decode_jwt_token(token)
+    print("Decoded JWT Token:", decoded_token)
 
-    # Commit the session to persist changes to the database
-    db.session.commit()
-
-    print("User added successfully!")
+    # Check if the token is valid and not expired
+    if 'exp' in decoded_token:
+        exp = datetime.utcfromtimestamp(decoded_token['exp'])
+        print("Token expires at:", exp)
