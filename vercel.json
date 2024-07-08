@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "run.py", // Path to your Flask application entry point
-      "use": "@vercel/python" // Specify the builder for Python projects
+      "src": "run.py",
+      "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "run.py" // Specify the entry point of your Flask app
+      "dest": "run.py"
     }
   ]
 }
