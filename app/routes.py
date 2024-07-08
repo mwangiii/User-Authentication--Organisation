@@ -168,7 +168,6 @@ def login_user():
 
     return jsonify(response_successful), 200
 
-
 # A user gets their own record or user record in organisations they belong to or created [PROTECTED]
 @app.route("/api/users/:id", methods=['GET'])
 def get_users_by_id(id):
