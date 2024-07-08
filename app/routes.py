@@ -31,17 +31,16 @@ def add_error_to_list(errors_list, field, message):
     })
 
 
+
 def generate_jwt_token(user_id):
     try:
-        payload = {
-            'exp': datetime.utcnow() + timedelta(hours=1),
-            'iat': datetime.utcnow(), 
-            'sub': str(user_id)
-        }
-        jwt_token = jwt.encode(payload, JWT_SECRET_KEY, algorithm='HS256')
-        return jwt_token
+        # Create JWT token with expiry time
+        expires_delta = timedelta(hours=1)
+        access_token = create_access_token(identity=str(user_id), expires_delta=expires_delta)
+        return access_token
     except Exception as e:
-        return "Cannot generate session token"
+        print(f"Error generating JWT token: {e}")
+        return None
 
 # Registers a user and creates a default organisation
 @app.route("/auth/register", methods=['POST'])
