@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 # Load database configuration from database.ini using config function
 db_params = config()
-app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{db_params['user']}:{db_params['password']}@{db_params['host']}/{db_params['database']}"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:QJKZuKBpgoInspGTLMrgWxlkfrSiLXKu@monorail.proxy.rlwy.net:17210/railway"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = '4f8b31dc8ee3437486e3424bcb2d6f0b'
 app.config['JWT_TOKEN_LOCATION'] = ['headers']
