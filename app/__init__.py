@@ -22,12 +22,13 @@ migrate = Migrate(app, db)
 # Import models (this should be done before calling db.create_all())
 from app import models
 
-# Create database tables using Flask-Migrate (recommended method)
-# This will handle migrations and ensure database schema changes are managed properly
-@migrate.init_app(app)
-def create_or_update_db():
-    with app.app_context():
-        db.create_all()
+# Create database tables if they do not exist
+with app.app_context():
+    db.create_all()
 
 # Import routes
 from app import routes
+
+# This will allow you to manage database migrations using Flask-Migrate
+if __name__ == '__main__':
+    app.run()
