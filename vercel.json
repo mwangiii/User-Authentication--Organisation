@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "run.py", // Path to your Flask application entry point
+      "use": "@vercel/python" // Specify the builder for Python projects
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "run.py" // Specify the entry point of your Flask app
+    }
+  ]
+}
+ion": 2,
+  "builds": [
+    {
+      "src": "run.py", // Path to your Flask application entry point
+      "use": "@vercel/python" // Specify the builder for Python projects
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "run.py" // Specify the entry point of your Flask app
+    }
+  ]
+}
+~
