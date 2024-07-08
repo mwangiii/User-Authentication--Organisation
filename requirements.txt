@@ -7,4 +7,4 @@ flask_jwt_extended==4.4.3
 flask_migrate==3.1.0
 SQLAlchemy==1.4.45
 Werkzeug==2.2.3
-psycopg2-binary
+psycopg2-binary==2.9.2
