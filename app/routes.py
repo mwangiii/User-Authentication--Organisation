@@ -99,7 +99,6 @@ def register_user():
 
         # Generate JWT token for the new user
         jwt_token = generate_jwt_token(new_user.userid)
-
         # Return successful response with JWT token and user data
         return jsonify({
             "status": "success",
