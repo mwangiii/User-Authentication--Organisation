@@ -327,7 +327,7 @@ def add_user_to_organization(orgId):
         data = request.json
 
         # Extract data from JSON request
-        userid = data.get('userid')  
+        userid = data.get('userId')
 
         # Validate required fields
         if not userid:
@@ -336,7 +336,7 @@ def add_user_to_organization(orgId):
         # Create a new UserOrganisation object
         new_user_organization = UserOrganisation(
             userid=userid,
-            orgid=orgId 
+            orgid=orgId
         )
 
         # Add to session and commit to database
@@ -348,12 +348,12 @@ def add_user_to_organization(orgId):
             "status": "success",
             "message": "User added to organization successfully",
             "data": {
-                "userid": new_user_organization.userid,
-                "orgid": new_user_organization.orgid
+                "userId": new_user_organization.userid,
+                "orgId": new_user_organization.orgid
             }
         }
 
-        return jsonify(response_successful), 201  
+        return jsonify(response_successful), 201
 
     except Exception as e:
         db.session.rollback()
@@ -362,7 +362,6 @@ def add_user_to_organization(orgId):
             "message": "Failed to add user to organization",
             "error": str(e)
         }), 500
-
 
 if __name__ == '__main__':
     app.run()
