@@ -69,9 +69,9 @@ def register_user():
 
     # Create a new user object
     new_user = User(
-        userid=str(uuid.uuid4()),
-        firstname=data['firstname'],
-        lastname=data['lastname'],
+        userId=str(uuid.uuid4()),
+        firstName=data['firstname'],
+        lastName=data['lastname'],
         email=data['email'],
         password=hashed_password,
         phone=data.get('phone')
@@ -291,7 +291,7 @@ def create_organization():
 
         # Create new Organisation object
         new_organization = Organisation(
-            orgid=str(uuid.uuid4()),
+            orgId=str(uuid.uuid4()),
             name=name,
             description=description
         )
@@ -336,8 +336,8 @@ def add_user_to_organization(orgId):
 
         # Create a new UserOrganisation object
         new_user_organization = UserOrganisation(
-            userid=userid,
-            orgid=orgId  # Assuming orgId is passed in the URL parameter
+            userId=userid,
+            orgId=orgId  # Assuming orgId is passed in the URL parameter
         )
 
         # Add to session and commit to database
