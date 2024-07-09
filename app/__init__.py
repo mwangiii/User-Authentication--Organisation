@@ -14,13 +14,17 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = '4f8b31dc8ee3437486e3424bcb2d6f0b'
 app.config['JWT_TOKEN_LOCATION'] = ['headers']
 
-# Initialize extensions (without directly importing routes to avoid circular import)
+# Initialize extensions
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
 migrate = Migrate(app, db)
 
 # Import models (this should be done before calling db.create_all())
 from app import models
+
+# Create database tables if they do not exist
+with app.app_context():
+    db.create_all()
 
 # Import routes
 from app import routes
