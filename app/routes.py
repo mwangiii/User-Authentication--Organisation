@@ -9,19 +9,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import os
 import uuid
+from app import create_app
 
 
 @app.route("/")
 def home_page():
     return "Welcome!"
-
-@app.route("/auth")
-def auth_page():
-    return "<div></div>"
-
-@app.route("/api")
-def api_page():
-    return "<div></div>"
 
 # Function to add errors to a list
 def add_error_to_list(errors_list, field, message):
