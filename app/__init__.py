@@ -32,3 +32,4 @@ from app import routes
 # This will allow you to manage database migrations using Flask-Migrate
 if __name__ == '__main__':
     app.run()
+    
