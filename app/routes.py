@@ -199,7 +199,7 @@ def get_organizations():
 
     try:
         # Query organizations where the user is a member
-        user_organizations = Organisation.query.join(UserOrganisation).filter(UserOrganisation.userid == userid).all()
+        user_organizations = db.session.query(Organisation).join(UserOrganisation).filter(UserOrganisation.userid == userid).all()
 
         # Prepare organizations data
         organizations = [{
@@ -290,7 +290,7 @@ def create_organization():
 
         # Create new Organisation object
         new_organization = Organisation(
-            orgId=str(uuid.uuid4()),
+            orgid=str(uuid.uuid4()),
             name=name,
             description=description
         )
@@ -335,8 +335,8 @@ def add_user_to_organization(orgId):
 
         # Create a new UserOrganisation object
         new_user_organization = UserOrganisation(
-            userId=userid,
-            orgId=orgId 
+            userid=userid,
+            orgid=orgId 
         )
 
         # Add to session and commit to database
