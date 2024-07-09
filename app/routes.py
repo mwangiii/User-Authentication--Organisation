@@ -122,7 +122,6 @@ def register_user():
             "error": str(e)
         }), 500
 
-
 # Logs in a user. When you log in, you can select an organisation to interact with
 @app.route("/auth/login", methods=['POST'])
 def login_user():
