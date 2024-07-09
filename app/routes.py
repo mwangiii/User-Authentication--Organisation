@@ -88,13 +88,21 @@ def register_user():
 
             # Create the organization associated with the new user
             new_org = Organisation(
+                orgid=str(uuid.uuid4()),
                 name=org_name,
-                description=f"{org_name} description",
-                orgid=str(uuid.uuid4())
+                description=f"{org_name} description"
             )
             db.session.add(new_org)
 
+            # Associate user with organization
+            user_org = UserOrganisation(userid=new_user.userid, orgid=new_org.orgid)
+            db.session.add(user_org)
+
         db.session.commit()
+
+        # Debug print statements
+        print(f"New User ID: {new_user.userid}")
+        print(f"New Org ID: {new_org.orgid}")
 
         # Generate JWT token for the new user
         jwt_token = generate_jwt_token(new_user.userid)
@@ -110,7 +118,7 @@ def register_user():
                     "firstName": new_user.firstname,
                     "lastName": new_user.lastname,
                     "email": new_user.email,
-                    "phone": new_user.phone
+                    "phone": new_user.phone,
                 }
             }
         }), 201 
@@ -121,7 +129,6 @@ def register_user():
             "message": "Registration unsuccessful",
             "error": str(e)
         }), 500
-
 # Logs in a user. When you log in, you can select an organisation to interact with
 @app.route("/auth/login", methods=['POST'])
 def login_user():
@@ -200,6 +207,7 @@ def get_organizations():
     try:
         # Query organizations where the user is a member
         user_organizations = db.session.query(Organisation).join(UserOrganisation).filter(UserOrganisation.userid == userid).all()
+        print(user_organizations)
 
         # Prepare organizations data
         organizations = [{
@@ -212,7 +220,7 @@ def get_organizations():
             "status": "success",
             "message": "Organizations retrieved successfully",
             "data": {
-                "organisations": organizations
+                "organisation": organizations
             }
         }
 
@@ -333,6 +341,15 @@ def add_user_to_organization(orgId):
         if not userid:
             return jsonify({"message": "User ID is required"}), 400
 
+        # Check if the organization exists
+        organization = Organisation.query.filter_by(orgid=orgId).first()
+        if not organization:
+            return jsonify({
+                "status": "error",
+                "message": "Organization not found",
+                "error": f"Organization with orgId {orgId} does not exist"
+            }), 404
+
         # Create a new UserOrganisation object
         new_user_organization = UserOrganisation(
             userid=userid,
@@ -362,6 +379,5 @@ def add_user_to_organization(orgId):
             "message": "Failed to add user to organization",
             "error": str(e)
         }), 500
-
 if __name__ == '__main__':
     app.run()
