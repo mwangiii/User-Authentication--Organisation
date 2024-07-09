@@ -43,10 +43,10 @@ def register_user():
     errors_list = []
 
     # Validating required fields
-    if not data.get('firstname'):
-        add_error_to_list(errors_list, field="firstname", message="First name is required")
-    if not data.get('lastname'):
-        add_error_to_list(errors_list, field="lastname", message="Last name is required")
+    if not data.get('firstName'):
+        add_error_to_list(errors_list, field="firstName", message="First name is required")
+    if not data.get('lastName'):
+        add_error_to_list(errors_list, field="lastName", message="Last name is required")
     if not data.get('email'):
         add_error_to_list(errors_list, field="email", message="Email is required")
     if not data.get('password'):
@@ -69,9 +69,9 @@ def register_user():
 
     # Create a new user object
     new_user = User(
-        userId=str(uuid.uuid4()),
-        firstName=data['firstname'],
-        lastName=data['lastname'],
+        userid=str(uuid.uuid4()),
+        firstname=data['firstName'],
+        lastname=data['lastName'],
         email=data['email'],
         password=hashed_password,
         phone=data.get('phone')
@@ -305,7 +305,7 @@ def create_organization():
             "status": "success",
             "message": "Organization created successfully",
             "data": {
-                "orgId": new_organization.orgid,  # Adjust this as per your actual model structure
+                "orgId": new_organization.orgid,  
                 "name": new_organization.name,
                 "description": new_organization.description if new_organization.description else ""
             }
@@ -328,7 +328,7 @@ def add_user_to_organization(orgId):
         data = request.json
 
         # Extract data from JSON request
-        userid = data.get('userid')  # Assuming you pass the userid in the request
+        userid = data.get('userid')  
 
         # Validate required fields
         if not userid:
@@ -337,7 +337,7 @@ def add_user_to_organization(orgId):
         # Create a new UserOrganisation object
         new_user_organization = UserOrganisation(
             userId=userid,
-            orgId=orgId  # Assuming orgId is passed in the URL parameter
+            orgId=orgId 
         )
 
         # Add to session and commit to database
@@ -354,7 +354,7 @@ def add_user_to_organization(orgId):
             }
         }
 
-        return jsonify(response_successful), 201  # HTTP status code for created
+        return jsonify(response_successful), 201  
 
     except Exception as e:
         db.session.rollback()
