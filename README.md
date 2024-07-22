@@ -130,10 +130,10 @@ _[POST] /auth/login : logs in a user. When you log in, you can select an organis
 ```
 ---
 _[GET] /api/users/:id : a user gets their own record or user record in organisations they belong to or created [PROTECTED]._
-#### Successful response: Return the payload below with a **`200 success status code.
+#### Successful response: Return the payload below with a **`200`** success status code.
 ```json
 {
-		"status": "success",
+    "status": "success",
     "message": "<message>",
     "data": {
       "userId": "string",
