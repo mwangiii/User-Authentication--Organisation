@@ -22,7 +22,6 @@ def add_error_to_list(errors_list, field, message):
         "message": message
     })
 
-JWT_SECRET_KEY = '4f8b31dc8ee3437486e3424bcb2d6f0b'
 
 def generate_jwt_token(user_id):
     try:
